@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    {% include head.html %}
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ "/assets/css/post_md.css" | relative_url }}">
+  </head>
+  <body>
+    <header id="top">
+      <nav>
+        <a href="{{ "/" | relative_url }}">Home</a>
+      </nav>
+      <h1>{{ page.title }}</h1>
+      <div class="post-date">
+        <label>Written on:&nbsp</label>
+        <time datetime="{{ page.date }}">{{ page.date | slice: 0, 10 }}</time>
+      </div>
+      <div class="post-date">
+        <label>Last edited on:&nbsp</label>
+        <time datetime="{{ page.last_edit }}">{{ page.last_edit | slice: 0, 10 }}</time>
+      </div>
+      <h2>
+        Abstract
+      </h2>
+      <p class="abstract">
+        {{ page.abstract }}
+      </p>
+    </header>
+    <hr>
+    <main>
+      <article>
+        {{ content }}
+      </article>
+      {% include back_to_top.html %}
+    </main>
+    {% include footer.html %}
+  </body>
+</html>

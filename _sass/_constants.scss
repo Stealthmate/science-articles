@@ -1,0 +1,100 @@
+$font-size-title: 1.8rem;
+$font-size-title-medium: 2.8rem;
+$font-size-title-large: 4rem;
+@mixin font-title {
+  font-size: $font-size-title;
+  @media screen and (min-width: 501px) {
+    font-size: $font-size-title-medium;
+  }
+  @media screen and (min-width: 1370px) {
+    font-size: $font-size-title-large;
+  }
+}
+
+$font-size-h1: 1.5rem;
+$font-size-h1-medium: 2.3rem;
+$font-size-h1-large: 3rem;
+@mixin font-h1 {
+  font-size: $font-size-h1;
+  @media screen and (min-width: 501px) {
+    font-size: $font-size-h1-medium;
+  }
+  @media screen and (min-width: 1370px) {
+    font-size: $font-size-h1-large;
+  }
+}
+
+$font-size-h2: 1.3rem;
+$font-size-h2-medium: 2rem;
+$font-size-h2-large: 2.5rem;
+@mixin font-h2 {
+  font-size: $font-size-h2;
+  @media screen and (min-width: 501px) {
+    font-size: $font-size-h2-medium;
+  }
+  @media screen and (min-width: 1370px) {
+    font-size: $font-size-h2-large;
+  }
+}
+
+$font-size-h3: 1rem;
+$font-size-h3-medium: 1.5rem;
+$font-size-h3-large: 1.8rem;
+@mixin font-h3 {
+  font-size: $font-size-h3;
+  @media screen and (min-width: 501px) {
+    font-size: $font-size-h3-medium;
+  }
+  @media screen and (min-width: 1370px) {
+    font-size: $font-size-h3-large;
+  }
+}
+
+$font-size-h4: 0.7rem;
+$font-size-h4-medium: 1.2rem;
+$font-size-h4-large: 1.5rem;
+@mixin font-h4 {
+  font-size: $font-size-h4;
+  @media screen and (min-width: 501px) {
+    font-size: $font-size-h4-medium;
+  }
+  @media screen and (min-width: 1370px) {
+    font-size: $font-size-h4-large;
+  }
+}
+
+$font-size-content: 1rem;
+$font-size-content-medium: 1.2rem;
+$font-size-content-large: 1.4rem;
+@mixin font-content {
+  font-size: $font-size-content;
+  @media screen and (min-width: 501px) {
+    font-size: $font-size-content-medium;
+  }
+  @media screen and (min-width: 1370px) {
+    font-size: $font-size-content-large;
+  }
+}
+
+$font-size-note: .9rem;
+$font-size-note-medium: 1.1rem;
+$font-size-note-large: 1.3rem;
+@mixin font-note {
+  font-size: $font-size-note;
+  @media screen and (min-width: 501px) {
+    font-size: $font-size-note-medium;
+  }
+  @media screen and (min-width: 1370px) {
+    font-size: $font-size-note-large;
+  }
+}
+
+
+$post-side-margin: 5vw;
+$post-text-margin-very-wide: 5vh;
+$post-text-margin-wide: 3vh;
+$post-text-margin-narrow: 1.5vh;
+
+$global-content-max-width: 1400px;
+
+@import 'theme_default';

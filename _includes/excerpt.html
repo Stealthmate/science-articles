@@ -1,0 +1,5 @@
+<a href="{{ post.url | relative_url }}" class='excerpt'>
+  <time datetime="{{ post.date }}">{{ post.date | slice: 0,10}}</time>
+  <h1>{{ post.title | truncate: 100 }}</h1>
+  <span class="post-excerpt"> {{ post.abstract | truncate: 300 }} </span>
+</a>
