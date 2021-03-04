@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="https://stealthmate.github.io/science-articles/assets/css/syntax.css">
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<!-- The loading of KaTeX is deferred to speed up page rendering -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" integrity="sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4" crossorigin="anonymous"></script>
+<!-- To automatically render math in text elements, include the auto-render extension: -->
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js" integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+
+ <script type="text/javascript">
+   document.addEventListener("DOMContentLoaded", function() {
+     renderMathInElement(document.body, {
+       delimiters: [
+         {left: "$$", right: "$$", display: true},
+         {left: "$", right: "$", display: false},
+         {left: "\\(", right: "\\)", display: false},
+         {left: "\\[", right: "\\]", display: true}
+       ]
+     })
+   })
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>A proof that DFA and NFA are equivalent</title>
+    <link rel="stylesheet" type="text/css" href="/science-articles/assets/css/post_md.css">
+  </head>
+  <body>
+    <header id="top">
+      <nav>
+        <a href="/science-articles/">Home</a>
+      </nav>
+      <h1>A proof that DFA and NFA are equivalent</h1>
+      <div class="post-date">
+        <label>Written on:&nbsp</label>
+        <time datetime="2021-03-05 00:00:00 +0900">2021-03-05</time>
+      </div>
+      <div class="post-date">
+        <label>Last edited on:&nbsp</label>
+        <time datetime="2021-03-05">2021-03-05</time>
+      </div>
+      <h2>
+        Abstract
+      </h2>
+      <p class="abstract">
+        I was giving a lecture on finite automata at a club gathering, and I had to prove that non-deterministic finite automata (with $\epsilon$ transitions) are equivalent to deterministic finite automata - a well known result. However, me being the lazy bloke I am, I didn't read the textbook beforehand and tried to prove this on the spot. Needless to say it didn't go as well as it should have, and I had to postpone the proof to the next gathering. I wanted to keep the formal proof for future reference, so I decided to write a short post about it. Feel free to quote this as you like (it should be correct, but do notify me if you spot a mistake). Since this is mainly a reference for myself, I'm not going to go into detail about what a finite automaton is, what it does, etc. However I will give the usual basic definitions so that the proof can be comprehensive.
+      </p>
+    </header>
+    <hr>
+    <main>
+      <article>
+        <h2 id="dfa-in-a-nutshell">DFA in a nutshell</h2>
+
+<p>A DFA (short for <em>deterministic finite automaton</em>) is usually stated as a 5-tuple $(Q, \Sigma, \delta, q_0, F)$ where each element is defined as follows:</p>
+
+<ul>
+  <li>$Q$ - the set of all possible states. Keep in mind, a “state” in this context is not a mathematical object. From the automaton’s perspective, states need only be different from each other - it doesn’t matter what they “are”. From a human’s perspective though, it is sometimes useful to give each state an interpretation, so that we understand what the automaton is doing in an abstract sense.</li>
+  <li>$\Sigma$ - the set of possible inputs to the automaton. Also called the input alphabet.</li>
+  <li>$\delta: Q\times\Sigma \to Q$ - the <em>state transition function</em>, that is a mapping which, given the current state and an input, evaluates to the next state after consuming the input.</li>
+  <li>$q_0 \in Q$ - the initial state of the automaton.</li>
+  <li>$F \subseteq Q$ - a subset of the possible states which are considered <em>final</em> (or <em>accepting</em>). Whether a state is accepting or not depends entirely on the interpretation of the problem.</li>
+</ul>
+
+<p>This is enough to theoretically define an automaton, but we usually introduce another definition for convenience. The <em>extended transition function</em></p>
+
+<div class="kdmath">$$
+\hat\delta : Q \times \Sigma^* \to Q,
+$$</div>
+
+<p>tells us the last state that the automaton enters after reading the whole input. Taking $\epsilon$ as the empty string, $w \in \Sigma^*$ and $a \in \Sigma$ we define $\hat\delta$ as</p>
+
+<div class="kdmath">$$
+\begin{aligned}
+\hat\delta(q, \epsilon) &= q, \\
+\hat\delta(q, wa) &= \delta(\hat\delta(w, q), a),
+\end{aligned}
+$$</div>
+
+<p>If we call our automaton $M$ and denote the set of strings that are accepted by $M$ as $L(M)$, we can define the acceptance condition for a string $w \in \Sigma^*$ as</p>
+
+<div class="kdmath">$$
+w \in L(M) \overset{def}{\iff} \hat\delta(q_0, w) \in F.
+$$</div>
+
+<h2 id="nfa-in-a-nutshell">NFA in a nutshell</h2>
+
+<p>A <em>non-deterministic automaton</em> (NFA for short) is like a DFA, except it can transition to multiple states (or none at all) for a given input. Thus the transition function is defined slithly differently</p>
+
+<div class="kdmath">$$
+\delta: Q \times \Sigma \to \mathcal{P}(Q).
+$$</div>
+
+<p>An top of this, we can also introduce $\epsilon$-transitions, that is, transitions which do not require any input ($\epsilon$ stands for the empty string, as denoted earlier). Such an NFA is given by the 5-tuple $(Q, \Sigma \cup \{\epsilon\}, \delta, q_0, F)$. Naturally, we also need to modify the extended transition function as well, but before that we need another concept.</p>
+
+<p>We call</p>
+
+<div class="kdmath">$$
+\Epsilon_1^*: Q \to \mathcal{P}(Q)
+$$</div>
+
+<p>the $\epsilon$ <em>closure</em> of $q$ and define it as</p>
+
+<div class="kdmath">$$
+\Epsilon_1^*(q_1) = \{ q \in Q \,|\, \text{There is a path from } q_1 \text{ to } q \text{ that contains only } \epsilon \text{ transitions.}\}.
+$$</div>
+
+<p>We shall use this definition to define the closure for a set of states $S \subseteq Q$ as</p>
+
+<div class="kdmath">$$
+\Epsilon^*(S) = \bigcup_{q \in S} \Epsilon_1^*(q).
+$$</div>
+
+<p>We can now (re-)define the extended transition function:</p>
+
+<div class="kdmath">$$
+\begin{aligned}
+\hat\delta : Q \times\Sigma^* &\to \mathcal{P}(Q) \\
+(q, \epsilon) &\mapsto \Epsilon^*(\{ q \}) \\
+(q, wa) &\mapsto \bigcup_{q_i \in \hat\delta(q, w)} \Epsilon^*(\delta(q_i, a)).
+\end{aligned}
+$$</div>
+
+<p>The acceptance condition changes as well. A single input string can be resolved to multiple end states, but we define an NFA to accept a string if even a single resolution ends in a final state. Thus, we can state this property (for an NFA called $N$ and a string $w \in \Sigma^*$) as</p>
+
+<div class="kdmath">$$
+w \in L(N) \overset{def}{\iff} \hat\delta(q_0, w) \cap F \neq \emptyset.
+$$</div>
+
+<h2 id="the-proof">The Proof</h2>
+
+<p>In order to show that NFA are equivalent, we must show that all DFAs can be represented as an NFA and vice versa.</p>
+
+<h3 id="any-dfa-can-be-represented-as-an-nfa">Any DFA can be represented as an NFA</h3>
+
+<p>Informally, since an NFA only allows non-deterministic transitions but doesn’t require them, any DFA is trivially an NFA. This in itself should be convincing enough, but we still provide a formal proof.</p>
+
+<p>Let $M$ be a DFA defined by the 5-tuple $(Q, \Sigma, \delta_M, q_0, F)$. We construct the NFA $N$ as $(Q, \Sigma \cup \{\epsilon\}, \delta_N, q_0, F)$, where</p>
+
+<div class="kdmath">$$
+\delta_N(q, a) = \{ \delta_M(q, a) \}.
+$$</div>
+
+<p>Furthermore, let $\hat\delta_M$ and $\hat\delta_N$ be defined as in the above sections respectively. Now we must show that $L(M) = L(N)$ which, substituting the acceptance conditions for a string $w \in \Sigma^*$, reduces to:</p>
+
+<div class="kdmath">$$
+\hat\delta_M(q_0, w) \in F \iff \hat\delta_N(q_0, w) \cap F \neq \emptyset.
+$$</div>
+
+<p>This equivalence in itself is deducible from the stronger result</p>
+
+<div class="kdmath">$$
+\hat\delta_N(q_0, w) = \{ \hat\delta_M(q_0, w) \}
+$$</div>
+
+<p>We prove the latter by induction on the length of $w$.</p>
+
+<h4 id="basis-w--epsilon">Basis: $w = \epsilon$</h4>
+
+<p>Simply substituting is enough (note that $N$ by definition has no $\epsilon$ transitions).</p>
+
+<div class="kdmath">$$
+\begin{aligned}
+\hat\delta_N(q_0, \epsilon) &= \Epsilon^*(q_0) \\
+&= \{q_0\} \\
+&= \{\hat\delta_M(q_0, \epsilon)\}.
+\end{aligned}
+$$</div>
+
+<p>Thus the equality holds.</p>
+
+<h4 id="induction-wprime--wa">Induction: $w\prime = wa$</h4>
+
+<p>Suppose that $\hat\delta_N(q_0, w) = { \hat\delta_M(q_0, w) }$ holds. We now need to show that it also holds true for $w\prime$. By substitution we get</p>
+
+<div class="kdmath">$$
+\begin{aligned}
+\hat\delta_N(q_0, w\prime) &= \hat\delta_N(q_0, wa) \\
+&= \bigcup_{q_i \in \hat\delta_N(q_0, w)} \Epsilon^*(\delta_N(q_i, a)) \\
+&= \bigcup_{q_i \in \hat\delta_N(q_0, w)} \Epsilon^*(\{\delta_M(q_i, a)\}) \\
+&= \bigcup_{q_i \in \hat\delta_N(q_0, w)} \{\delta_M(q_i, a)\} \\
+&= \bigcup_{q_i \in \{\hat\delta_M(q_0, w)\}} \{\delta_M(q_i, a)\} \\
+&= \{ \delta_M(\delta_M(q_0, w), a) \} \\
+&= \{ \delta_M(q_0, wa) \} \\
+&= \{ \delta_M(q_0, w\prime) \} \\
+\end{aligned}
+$$</div>
+
+<p>Thus the induction step is complete and therefore</p>
+
+<div class="kdmath">$$
+\hat\delta_N(q_0, w) = \{ \hat\delta_M(q_0, w) \}
+$$</div>
+
+<p>holds true for any string $w \in \Sigma^*$. As stated earlier, this imples that $L(M) = L(N)$.</p>
+
+<h3 id="any-nfa-can-be-represented-as-a-dfa">Any NFA can be represented as a DFA</h3>
+
+<p>Informally, we can show this by constructing a DFA where each state represents the collection of states that the original NFA can be in at any single point in time. For example, suppose that given an input symbol $a$, an NFA in state $q_1$ may transition to either $q_2$ or $q_3$. In our DFA, we would define a state $q_{23}$ which has an in-arrow for the input $a$ and represents the original NFA being in states $q_2$ or $q_3$ simultaneously. Since the number of states in a finite automaton is (obviously) finite, there are only a finite number (namely $ 2^{|Q|}) $ of possible “multi-states” that we can use for our DFA. Furthermore, we would define accepting states as those for which the original NFA is in at least one accepting state.</p>
+
+<p>Below we present the formal proof.</p>
+
+<hr />
+
+<p>Let $N$ be an NFA defined by the 5-tuple $(Q, \Sigma \cup \{ \epsilon \}, \delta, q_0, F)$. We construct the DFA $M$ as $(Q\prime, \Sigma, \delta\prime, q_0\prime, F\prime)$ with an additional injective mapping $\phi: Q\prime \to \mathcal{P}(Q)$ which we call the <em>interpretation</em> of the states of $M$. Define the states of $M$ recursively as follows,</p>
+
+<ul>
+  <li>$M$ has a state $q_0\prime$ with the interpretation $\phi(q_0\prime) = \Epsilon^*(\{ q_0\})$.</li>
+  <li>Let $q\prime \in Q\prime$ and $a \in \Sigma$. Then $M$ has a state $q_i\prime$ with the interpretation</li>
+</ul>
+
+<div class="kdmath">$$
+\phi(q_i\prime) = \bigcup_{q \in \phi(q\prime)} \Epsilon^*(\delta(q, a)).
+$$</div>
+
+<p>Incidentally, this is also how we define $\delta\prime$, namely</p>
+
+<div class="kdmath">$$
+\delta\prime(q\prime, a) = q_i\prime.
+$$</div>
+
+<p>Lastly, we define the set of final states of $M$ as</p>
+
+<div class="kdmath">$$
+F\prime = \{ q\prime \in Q \,|\, \phi(q\prime) \cap F \neq \emptyset \}.
+$$</div>
+
+<p>Thus the acceptance condition for $M$ on the input $w \in \Sigma^*$ is expressed as</p>
+
+<div class="kdmath">$$
+w \in L(M) \iff \hat\delta\prime(q_0\prime, w) \in F\prime \iff \phi(\hat\delta\prime(q_0\prime, w)) \cap F \neq \emptyset.
+$$</div>
+
+<p>Now we must show that $L(M) = L(N)$ or</p>
+
+<div class="kdmath">$$
+\hat\delta(q_0, w) \cap F \neq \emptyset \iff \hat\delta\prime(q_0, w) \in F\prime
+$$</div>
+
+<p>which, using the above acceptance condition can be rewritten as</p>
+
+<div class="kdmath">$$
+\hat\delta(q_0, w) \cap F \neq \emptyset \iff \phi(\hat\delta\prime(q_0\prime, w)) \cap F \neq \emptyset.
+$$</div>
+
+<p>Again, we will actually prove the stronger result</p>
+
+<div class="kdmath">$$
+\hat\delta(q_0, w) = \phi(\hat\delta\prime(q_0\prime, w))
+$$</div>
+
+<p>which implies the above equivalence. Similar to the proof that any DFA can be converted to an NFA, we use induction on the input string $w$.</p>
+
+<h4 id="basis-w--epsilon-1">Basis: $w = \epsilon$</h4>
+
+<p>Subtitute directly to get</p>
+
+<div class="kdmath">$$
+\begin{aligned}
+\hat\delta(q_0, \epsilon) &= \Epsilon^*(\{q_0\}) \\
+&= \phi(q_0\prime),
+\end{aligned}
+$$</div>
+
+<p>thus the base case holds.</p>
+
+<h4 id="induction-wprime--wa-1">Induction: $w\prime = wa$</h4>
+
+<p>Suppose that $\hat\delta(q_0, w) = \phi(\hat\delta\prime(q_0\prime, w))$ holds and substitute, yielding</p>
+
+<div class="kdmath">$$
+\begin{aligned}
+\hat\delta(q_0, w\prime) &= \bigcup_{q \in \hat\delta(q_0, w)} \Epsilon^*{\delta(q, a)} \\
+&= \bigcup_{q \in \phi(\hat\delta\prime(q_0, w))} \Epsilon^*({\delta(q, a)}) \\
+&= \phi(\delta\prime(\hat\delta\prime(q_0, w), a)) \\
+&= \phi(\delta(q_0, wa)) \\
+&= \phi(\delta(q_0, w\prime)).
+\end{aligned}
+$$</div>
+
+<p>This completes the induction and thus we have proven that for any $w \in \Sigma^*$</p>
+
+<div class="kdmath">$$
+\hat\delta(q_0, w) = \phi(\hat\delta\prime(q_0\prime, w)),
+$$</div>
+
+<p>which implies that the acceptance conditions are equivalent and therefore $L(M) = L(N)$.</p>
+
+<p><span class="qed">Q.E.D.</span></p>
+
+
+      </article>
+      <a id="back-to-top" href="#top">
+  <svg viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="0" cy="0" r="50" />
+    <line x1="-30" y1="10" x2="0" y2="-18" stroke-linecap="round"/>
+    <line x1="0" y1="-18" x2="30" y2="10" stroke-linecap="round"/>
+  </svg>
+</a>
+
+    </main>
+    <footer>
+  <a href="https://twitter.com/stealthmate_val?ref_src=twsrc%5Etfw" class="twitter-follow-button sns-button" data-show-count="false">Follow @stealthmate_val</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+  <a class="sns-button github-button" href="https://github.com/stealthmate" aria-label="Follow @stealthmate on GitHub">Follow @stealthmate</a>
+</footer>
+
+  </body>
+</html>

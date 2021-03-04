@@ -26,6 +26,8 @@ toc:
   min_level: 1
   max_level: 3
 
+destination: dist
+
 # Build settings
 markdown: kramdown
 theme: minima
