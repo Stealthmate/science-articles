@@ -94,7 +94,7 @@ article {
   }
 }
 
-p, .kdmath {
+p, .kdmath, .katex-display, ul {
   @include font-content;
 }
 
