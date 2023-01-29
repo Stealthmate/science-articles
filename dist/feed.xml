@@ -1,4 +1,297 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="https://stealthmate.github.io/science-articles/feed.xml" rel="self" type="application/atom+xml" /><link href="https://stealthmate.github.io/science-articles/" rel="alternate" type="text/html" /><updated>2021-03-05T03:55:16+09:00</updated><id>https://stealthmate.github.io/science-articles/feed.xml</id><title type="html">Science articles and whatnot</title><subtitle>Random science-related proofs and whatnot that I felt the need to put in words.</subtitle><entry><title type="html">A proof that DFA and NFA are equivalent</title><link href="https://stealthmate.github.io/science-articles/2021/03/05/proof-epsilon-nfa-equivalence.html" rel="alternate" type="text/html" title="A proof that DFA and NFA are equivalent" /><published>2021-03-05T00:00:00+09:00</published><updated>2021-03-05T00:00:00+09:00</updated><id>https://stealthmate.github.io/science-articles/2021/03/05/proof-epsilon-nfa-equivalence</id><content type="html" xml:base="https://stealthmate.github.io/science-articles/2021/03/05/proof-epsilon-nfa-equivalence.html">&lt;h2 id=&quot;dfa-in-a-nutshell&quot;&gt;DFA in a nutshell&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.7">Jekyll</generator><link href="http://0.0.0.0:4000/science-articles/feed.xml" rel="self" type="application/atom+xml" /><link href="http://0.0.0.0:4000/science-articles/" rel="alternate" type="text/html" /><updated>2022-02-19T18:51:23+09:00</updated><id>http://0.0.0.0:4000/science-articles/feed.xml</id><title type="html">Science articles and whatnot</title><subtitle>Random science-related proofs and whatnot that I felt the need to put in words.</subtitle><entry><title type="html">Translating Weisfaler and Leman’s graph isomorphism paper into layman’s English</title><link href="http://0.0.0.0:4000/science-articles/2022/02/06/weisfeiler-leman.html" rel="alternate" type="text/html" title="Translating Weisfaler and Leman’s graph isomorphism paper into layman’s English" /><published>2022-02-06T00:00:00+09:00</published><updated>2022-02-06T00:00:00+09:00</updated><id>http://0.0.0.0:4000/science-articles/2022/02/06/weisfeiler-leman</id><content type="html" xml:base="http://0.0.0.0:4000/science-articles/2022/02/06/weisfeiler-leman.html">&lt;h2 id=&quot;the-basic-idea&quot;&gt;The basic idea&lt;/h2&gt;
+
+&lt;p&gt;asdasd&lt;/p&gt;
+
+&lt;h2 id=&quot;the-construction&quot;&gt;The construction&lt;/h2&gt;
+
+&lt;p&gt;Consider a graph $\Gamma$ on $n$ vertices. Let $A(\Gamma)$ be its adjacency matrix, that is the matrix whose entry $a_{i,j}$ is equal to the number of edges from vertex $v_i$ to vertex $v_j$. We are going to construct a matrix $X(\Gamma)$ whose entries $x_{i,j}$ are &lt;em&gt;independent variables&lt;/em&gt;. Every entry $x_{i,i}$ on the main diagonal contains an independent variable $\gamma_k$ and every other entry contains an independent variable $\chi_k$. We use the notation $x_{i,j} = \chi_k$ or $x_{i,i} = \gamma_k$ to denote that a certain entry in $X$ is populated by the corresponding variable; we also use $x_{i,j} = x_{i^\prime, j^\prime}$ to mean that the two entries in $X$ are populated by the same variable. With this in mind, we impose the following requirement:&lt;/p&gt;
+
+&lt;div class=&quot;kdmath&quot;&gt;$$
+x_{i,j} = x_{i^\prime, j^\prime} = \begin{cases}
+\gamma_k &amp; i = j,\\
+\chi_k &amp; i \neq j
+\end{cases} \iff a_{i,j} = a_{i^\prime, j^\prime}.
+$$&lt;/div&gt;
+
+&lt;p&gt;That is to say, entries of $X$ which correspond to equal values of $A(\Gamma)$ are populated with the same variable.&lt;/p&gt;
+
+&lt;p&gt;Next we define a partial order on all the $\gamma_k$ and $\chi_k$ as follows. First, let $\gamma_i &amp;gt; \chi_j$ for all $i$, $j$, that is to say, variables at the diagonal are always larger than any non-diagonal variable. Addtionally, for all $i$ and $j$, let&lt;/p&gt;
+
+&lt;div class=&quot;kdmath&quot;&gt;$$
+x_{i,j} &gt; x_{i^\prime, j^\prime} \iff a_{i, j} &gt; a_{i^\prime, j^\prime},
+$$&lt;/div&gt;
+
+&lt;p&gt;that is the order between pairs of $\gamma_k$ or $\chi_k$ is the same as the order on the corresponding entries in $A(\Gamma)$. &lt;strong&gt;This ordering is in fact total&lt;/strong&gt; and we enumerate all the variables accordingly. Thus, $\gamma_1$ is the variable that corresponds to the smallest $a_{i,i}$ and $\chi_1$ is the variable that corresponds to the smallest $a_{i,j}$ where $i \neq j$.&lt;/p&gt;
+
+&lt;p&gt;Let $X^\prime$ be the matrix where each variable $\gamma_k$ or $\chi_k$ in $X$ is replaced by a yet new variable $\gamma^\prime_k$ or $\chi^\prime_k$ accordingly. As previously, we use $x^\prime_{i,j}$ to denote the corresponding entry in $X^\prime$. Using this, we define the following ordering on bilinear terms of $\gamma_k$, $\gamma^\prime_k$, $\chi_k$, $\chi^\prime_k$ where $(i, j)$ denotes an ordered pair of natural numbers.&lt;/p&gt;
+
+&lt;div class=&quot;kdmath&quot;&gt;$$
+\chi_i\chi^\prime_j &gt; \chi_k\chi^\prime_l \iff (i, j) &gt; (k, l).
+$$&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Note that we use the same definition for terms that contain both $\chi$ and $\gamma$ or $\gamma$ only, that is to say we compare the corresponding indices.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;operations-on-the-matrix-x&quot;&gt;Operations on the matrix $X$&lt;/h3&gt;
+
+&lt;p&gt;Next, we define a group of operations that take $X$ as input and yield a new matrix.&lt;/p&gt;
+
+&lt;p&gt;First, let $\alpha_0(X)$ be an operation that relabels the vertices of $\Gamma$ so that in $X^{(1)} = \alpha_0(X)$ we have&lt;/p&gt;
+
+&lt;div class=&quot;kdmath&quot;&gt;$$
+i \leq j \iff x^{(1)}_{i, i} = \gamma_k \leq \gamma_l = x^{(1)}_{j, j}.
+$$&lt;/div&gt;
+
+&lt;p&gt;In other words, $\alpha_0(X)$ permutes the rows and columns of $X$ so that the elements on the diagonal fall in the order described earlier.&lt;/p&gt;
+
+&lt;p&gt;Now we define $\alpha_1(X)$ as an operation that replaces the variables in $X$ with new ones. The new variables are also ordered and their enumeration is given by the function $l(i, j)$. Note that we use $l(i) = l(i, i)$ for short. First we define the relationship between values of $l(i, j)$ as follows, with the new notation explained afterwards.&lt;/p&gt;
+
+&lt;div class=&quot;kdmath&quot;&gt;$$
+\begin{aligned}
+l(i) &lt; l(j) &amp;\iff \Big( f^{I}_i(X), f^{II}_i(X) \Big) &lt; \Big( f^{I}_j(X), f^{II}_j(X) \Big), \\
+l(i, j) &lt; l(i^\prime, j^\prime) &amp;\iff F(i, j) &lt; F(i^\prime, j^\prime).
+\end{aligned}
+$$&lt;/div&gt;
+
+&lt;p&gt;$f^{I}_i(X)$ and $f^{II}_i(X)$ denote the $i$-th row and $i$-th column of $X$ respectively, and the tuple $\Big( f^{I}_i(X), f^{II}_i(X) \Big)$ denotes their concatenation. We define $F(i, j)$ as follows.&lt;/p&gt;
+
+&lt;div class=&quot;kdmath&quot;&gt;$$
+F(i, j) = \Big( x_{ij,ji}, f^{I}_i(X), f^{II}_i(X), f^{II}_j(X)\Big)
+$$&lt;/div&gt;
+
+&lt;!-- ## DFA in a nutshell --&gt;
+
+&lt;!-- A DFA (short for *deterministic finite automaton*) is usually stated as a 5-tuple $(Q, \Sigma, \delta, q_0, F)$ where each element is defined as follows: --&gt;
+
+&lt;!-- - $Q$ - the set of all possible states. Keep in mind, a &quot;state&quot; in this context is not a mathematical object. From the automaton's perspective, states need only be different from each other - it doesn't matter what they &quot;are&quot;. From a human's perspective though, it is sometimes useful to give each state an interpretation, so that we understand what the automaton is doing in an abstract sense. --&gt;
+&lt;!-- - $\Sigma$ - the set of possible inputs to the automaton. Also called the input alphabet. --&gt;
+&lt;!-- - $\delta: Q\times\Sigma \to Q$ - the *state transition function*, that is a mapping which, given the current state and an input, evaluates to the next state after consuming the input. --&gt;
+&lt;!-- - $q_0 \in Q$ - the initial state of the automaton. --&gt;
+&lt;!-- - $F \subseteq Q$ - a subset of the possible states which are considered *final* (or *accepting*). Whether a state is accepting or not depends entirely on the interpretation of the problem. --&gt;
+
+&lt;!-- This is enough to theoretically define an automaton, but we usually introduce another definition for convenience. The *extended transition function* --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \hat\delta : Q \times \Sigma^* \to Q, --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- tells us the last state that the automaton enters after reading the whole input. Taking $\epsilon$ as the empty string, $w \in \Sigma^*$ and $a \in \Sigma$ we define $\hat\delta$ as --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{aligned} --&gt;
+&lt;!-- \hat\delta(q, \epsilon) &amp;= q, \\ --&gt;
+&lt;!-- \hat\delta(q, wa) &amp;= \delta(\hat\delta(w, q), a), --&gt;
+&lt;!-- \end{aligned} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- If we call our automaton $M$ and denote the set of strings that are accepted by $M$ as $L(M)$, we can define the acceptance condition for a string $w \in \Sigma^*$ as --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- w \in L(M) \overset{def}{\iff} \hat\delta(q_0, w) \in F. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- ## NFA in a nutshell --&gt;
+
+&lt;!-- A *non-deterministic automaton* (NFA for short) is like a DFA, except it can transition to multiple states (or none at all) for a given input. Thus the transition function is defined slithly differently --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \delta: Q \times \Sigma \to \mathcal{P}(Q). --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- An top of this, we can also introduce $\epsilon$-transitions, that is, transitions which do not require any input ($\epsilon$ stands for the empty string, as denoted earlier). Such an NFA is given by the 5-tuple $(Q, \Sigma \cup \\{\epsilon\\}, \delta, q_0, F)$. Naturally, we also need to modify the extended transition function as well, but before that we need another concept. --&gt;
+
+&lt;!-- We call --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \Epsilon_1^*: Q \to \mathcal{P}(Q) --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- the $\epsilon$ *closure* of $q$ and define it as --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \Epsilon_1^*(q_1) = \{ q \in Q \,|\, \text{There is a path from } q_1 \text{ to } q \text{ that contains only } \epsilon \text{ transitions.}\}. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- We shall use this definition to define the closure for a set of states $S \subseteq Q$ as --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \Epsilon^*(S) = \bigcup_{q \in S} \Epsilon_1^*(q). --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- We can now (re-)define the extended transition function: --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{aligned} --&gt;
+&lt;!-- \hat\delta : Q \times\Sigma^* &amp;\to \mathcal{P}(Q) \\ --&gt;
+&lt;!-- (q, \epsilon) &amp;\mapsto \Epsilon^*(\{ q \}) \\ --&gt;
+&lt;!-- (q, wa) &amp;\mapsto \bigcup_{q_i \in \hat\delta(q, w)} \Epsilon^*(\delta(q_i, a)). --&gt;
+&lt;!-- \end{aligned} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- The acceptance condition changes as well. A single input string can be resolved to multiple end states, but we define an NFA to accept a string if even a single resolution ends in a final state. Thus, we can state this property (for an NFA called $N$ and a string $w \in \Sigma^*$) as --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- w \in L(N) \overset{def}{\iff} \hat\delta(q_0, w) \cap F \neq \emptyset. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- ## The Proof --&gt;
+
+&lt;!-- In order to show that NFA are equivalent, we must show that all DFAs can be represented as an NFA and vice versa. --&gt;
+
+&lt;!-- ### Any DFA can be represented as an NFA --&gt;
+
+&lt;!-- Informally, since an NFA only allows non-deterministic transitions but doesn't require them, any DFA is trivially an NFA. This in itself should be convincing enough, but we still provide a formal proof. --&gt;
+
+&lt;!-- Let $M$ be a DFA defined by the 5-tuple $(Q, \Sigma, \delta_M, q_0, F)$. We construct the NFA $N$ as $(Q, \Sigma \cup \\{\epsilon\\}, \delta_N, q_0, F)$, where --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \delta_N(q, a) = \{ \delta_M(q, a) \}. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Furthermore, let $\hat\delta_M$ and $\hat\delta_N$ be defined as in the above sections respectively. Now we must show that $L(M) = L(N)$ which, substituting the acceptance conditions for a string $w \in \Sigma^*$, reduces to: --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \hat\delta_M(q_0, w) \in F \iff \hat\delta_N(q_0, w) \cap F \neq \emptyset. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- This equivalence in itself is deducible from the stronger result --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \hat\delta_N(q_0, w) = \{ \hat\delta_M(q_0, w) \} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- We prove the latter by induction on the length of $w$. --&gt;
+
+&lt;!-- #### Basis: $w = \epsilon$ --&gt;
+
+&lt;!-- Simply substituting is enough (note that $N$ by definition has no $\epsilon$ transitions). --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{aligned} --&gt;
+&lt;!-- \hat\delta_N(q_0, \epsilon) &amp;= \Epsilon^*(q_0) \\ --&gt;
+&lt;!-- &amp;= \{q_0\} \\ --&gt;
+&lt;!-- &amp;= \{\hat\delta_M(q_0, \epsilon)\}. --&gt;
+&lt;!-- \end{aligned} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Thus the equality holds. --&gt;
+
+&lt;!-- #### Induction: $w\prime = wa$ --&gt;
+
+&lt;!-- Suppose that $\hat\delta_N(q_0, w) = \{ \hat\delta_M(q_0, w) \}$ holds. We now need to show that it also holds true for $w\prime$. By substitution we get --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{aligned} --&gt;
+&lt;!-- \hat\delta_N(q_0, w\prime) &amp;= \hat\delta_N(q_0, wa) \\ --&gt;
+&lt;!-- &amp;= \bigcup_{q_i \in \hat\delta_N(q_0, w)} \Epsilon^*(\delta_N(q_i, a)) \\ --&gt;
+&lt;!-- &amp;= \bigcup_{q_i \in \hat\delta_N(q_0, w)} \Epsilon^*(\{\delta_M(q_i, a)\}) \\ --&gt;
+&lt;!-- &amp;= \bigcup_{q_i \in \hat\delta_N(q_0, w)} \{\delta_M(q_i, a)\} \\ --&gt;
+&lt;!-- &amp;= \bigcup_{q_i \in \{\hat\delta_M(q_0, w)\}} \{\delta_M(q_i, a)\} \\ --&gt;
+&lt;!-- &amp;= \{ \delta_M(\delta_M(q_0, w), a) \} \\ --&gt;
+&lt;!-- &amp;= \{ \delta_M(q_0, wa) \} \\ --&gt;
+&lt;!-- &amp;= \{ \delta_M(q_0, w\prime) \} \\ --&gt;
+&lt;!-- \end{aligned} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Thus the induction step is complete and therefore --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \hat\delta_N(q_0, w) = \{ \hat\delta_M(q_0, w) \} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- holds true for any string $w \in \Sigma^*$. As stated earlier, this imples that $L(M) = L(N)$. --&gt;
+
+&lt;!-- ### Any NFA can be represented as a DFA --&gt;
+
+&lt;!-- Informally, we can show this by constructing a DFA where each state represents the collection of states that the original NFA can be in at any single point in time. For example, suppose that given an input symbol $a$, an NFA in state $q_1$ may transition to either $q_2$ or $q_3$. In our DFA, we would define a state $q_{23}$ which has an in-arrow for the input $a$ and represents the original NFA being in states $q_2$ or $q_3$ simultaneously. Since the number of states in a finite automaton is (obviously) finite, there are only a finite number (namely $ 2^{\|Q\|}) $ of possible &quot;multi-states&quot; that we can use for our DFA. Furthermore, we would define accepting states as those for which the original NFA is in at least one accepting state. --&gt;
+
+&lt;!-- Below we present the formal proof. --&gt;
+
+&lt;!-- --- --&gt;
+
+&lt;!-- Let $N$ be an NFA defined by the 5-tuple $(Q, \Sigma \cup \\{ \epsilon \\}, \delta, q_0, F)$. We construct the DFA $M$ as $(Q\prime, \Sigma, \delta\prime, q_0\prime, F\prime)$ with an additional injective mapping $\phi: Q\prime \to \mathcal{P}(Q)$ which we call the *interpretation* of the states of $M$. Define the states of $M$ recursively as follows, --&gt;
+
+&lt;!-- - $M$ has a state $q_0\prime$ with the interpretation $\phi(q_0\prime) = \Epsilon^*(\\{ q_0\\})$. --&gt;
+&lt;!-- - Let $q\prime \in Q\prime$ and $a \in \Sigma$. Then $M$ has a state $q_i\prime$ with the interpretation --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \phi(q_i\prime) = \bigcup_{q \in \phi(q\prime)} \Epsilon^*(\delta(q, a)). --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Incidentally, this is also how we define $\delta\prime$, namely --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \delta\prime(q\prime, a) = q_i\prime. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Lastly, we define the set of final states of $M$ as --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- F\prime = \{ q\prime \in Q \,|\, \phi(q\prime) \cap F \neq \emptyset \}. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Thus the acceptance condition for $M$ on the input $w \in \Sigma^*$ is expressed as --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- w \in L(M) \iff \hat\delta\prime(q_0\prime, w) \in F\prime \iff \phi(\hat\delta\prime(q_0\prime, w)) \cap F \neq \emptyset. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Now we must show that $L(M) = L(N)$ or --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \hat\delta(q_0, w) \cap F \neq \emptyset \iff \hat\delta\prime(q_0, w) \in F\prime --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- which, using the above acceptance condition can be rewritten as --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \hat\delta(q_0, w) \cap F \neq \emptyset \iff \phi(\hat\delta\prime(q_0\prime, w)) \cap F \neq \emptyset. --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- Again, we will actually prove the stronger result --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \hat\delta(q_0, w) = \phi(\hat\delta\prime(q_0\prime, w)) --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- which implies the above equivalence. Similar to the proof that any DFA can be converted to an NFA, we use induction on the input string $w$. --&gt;
+
+&lt;!-- #### Basis: $w = \epsilon$ --&gt;
+
+&lt;!-- Subtitute directly to get --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{aligned} --&gt;
+&lt;!-- \hat\delta(q_0, \epsilon) &amp;= \Epsilon^*(\{q_0\}) \\ --&gt;
+&lt;!-- &amp;= \phi(q_0\prime), --&gt;
+&lt;!-- \end{aligned} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- thus the base case holds. --&gt;
+
+&lt;!-- #### Induction: $w\prime = wa$ --&gt;
+
+&lt;!-- Suppose that $\hat\delta(q_0, w) = \phi(\hat\delta\prime(q_0\prime, w))$ holds and substitute, yielding --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \begin{aligned} --&gt;
+&lt;!-- \hat\delta(q_0, w\prime) &amp;= \bigcup_{q \in \hat\delta(q_0, w)} \Epsilon^*{\delta(q, a)} \\ --&gt;
+&lt;!-- &amp;= \bigcup_{q \in \phi(\hat\delta\prime(q_0, w))} \Epsilon^*({\delta(q, a)}) \\ --&gt;
+&lt;!-- &amp;= \phi(\delta\prime(\hat\delta\prime(q_0, w), a)) \\ --&gt;
+&lt;!-- &amp;= \phi(\delta(q_0, wa)) \\ --&gt;
+&lt;!-- &amp;= \phi(\delta(q_0, w\prime)). --&gt;
+&lt;!-- \end{aligned} --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- This completes the induction and thus we have proven that for any $w \in \Sigma^*$ --&gt;
+
+&lt;!-- $$ --&gt;
+&lt;!-- \hat\delta(q_0, w) = \phi(\hat\delta\prime(q_0\prime, w)), --&gt;
+&lt;!-- $$ --&gt;
+
+&lt;!-- which implies that the acceptance conditions are equivalent and therefore $L(M) = L(N)$. --&gt;
+
+&lt;!-- &lt;span class=&quot;qed&quot;&gt;Q.E.D.&lt;/span&gt;
+ --&gt;</content><author><name>Valeri</name></author><summary type="html">The basic idea</summary></entry><entry><title type="html">A proof that DFA and NFA are equivalent</title><link href="http://0.0.0.0:4000/science-articles/2021/03/05/proof-epsilon-nfa-equivalence.html" rel="alternate" type="text/html" title="A proof that DFA and NFA are equivalent" /><published>2021-03-05T00:00:00+09:00</published><updated>2021-03-05T00:00:00+09:00</updated><id>http://0.0.0.0:4000/science-articles/2021/03/05/proof-epsilon-nfa-equivalence</id><content type="html" xml:base="http://0.0.0.0:4000/science-articles/2021/03/05/proof-epsilon-nfa-equivalence.html">&lt;h2 id=&quot;dfa-in-a-nutshell&quot;&gt;DFA in a nutshell&lt;/h2&gt;
 
 &lt;p&gt;A DFA (short for &lt;em&gt;deterministic finite automaton&lt;/em&gt;) is usually stated as a 5-tuple $(Q, \Sigma, \delta, q_0, F)$ where each element is defined as follows:&lt;/p&gt;
 
